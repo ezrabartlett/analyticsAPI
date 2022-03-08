@@ -42,6 +42,21 @@ const logVisit = async () => {
     }
 };
 
+const logResumeDownload = async () => {
+    var date = getDateTime();
+    try {         // gets connection
+        await client.query("INSERT INTO resumeDownloads(date)VALUES('"+date+"')",
+            (err, res) => {
+                console.log(err, res);
+            }
+        );
+        return true;
+    } catch (error) {
+        console.error(error.stack);
+        return false;
+    }
+};
+
 const logSystemGenerated = async (coordinates) => {
     var date = getDateTime();
     try {         // gets connection
@@ -71,10 +86,14 @@ app.get('/siteVisit', (req, res) => {
     });
 });
 
-app.get('/resumeDownload', (req, res) => {
-    console.log("Site visited");
-    res.status(200).send({
-        response: "Resume Download logged"
+app.get('/resumeDownloaded', (req, res) => {
+    console.log("resume downloaded");
+    logResumeDownload().then(result => {
+        if (result) {
+            res.status(200).send({
+                response: "logged a resume download"
+            });
+        }
     });
 });
 
