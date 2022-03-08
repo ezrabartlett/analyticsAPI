@@ -2,7 +2,7 @@ const app = require('express')();
 
 const { Pool, Client } = require("pg");
 
-const pool = new Pool({
+const Client = new Client({
   user: "pvigrpjtxqtcnn",
   host: "ec2-52-23-40-80.compute-1.amazonaws.com",
   database: "dbaiv4n81imle6",
@@ -18,6 +18,21 @@ const pool = new Pool({
 });*/
 
 //client.connect();
+
+const logVisit = async (visitNum) => {
+    try {
+        await client.connect();           // gets connection
+        await client.query(
+            `INSERT INTO "visits" ("visit")  
+             VALUES ($1)`, [visitNum]); // sends queries
+        return true;
+    } catch (error) {
+        console.error(error.stack);
+        return false;
+    } finally {
+        await client.end();               // closes connection
+    }
+};
 
 const PORT = process.env.PORT || 8080;
 
@@ -41,16 +56,13 @@ app.get('/resumeDownload', (req, res) => {
 });
 
 app.get('/testVisit', (req, res) => {
-    console.log("creating table");
-    pool.query(
-      "INSERT INTO Visit(visit)VALUES(20)",
-      (err, res) => {
-        console.log(err, res);
-        pool.end();
-      }
-    );
-    res.status(200).send({
-        response: "created table"
+    console.log("inserting a visit");
+    logVisit(25).then(result => {
+        if (result) {
+            res.status(200).send({
+                response: "created table"
+            });
+        }
     });
 });
 
