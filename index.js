@@ -40,6 +40,20 @@ app.get('/resumeDownload', (req, res) => {
     });
 });
 
+app.get('/testVisit', (req, res) => {
+    console.log("creating table");
+    client.query("CREATE TABLE testTable (visits int);", (err, res) => {
+      if (err) throw err;
+      for (let row of res.rows) {
+        console.log(JSON.stringify(row));
+      }
+      client.end();
+    });
+    res.status(200).send({
+        response: "created table"
+    });
+});
+
 app.get('/systemGenerated/:seed', (req, res) => {
     console.log("Site visited");
     const {seed} = req.params;
