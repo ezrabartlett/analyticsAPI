@@ -19,19 +19,6 @@ const client = new Client({
 
 client.connect();
 
-const logVisit = async () => {
-    try {         // gets connection
-        var datetime = getDateTime()
-        await client.query(
-            `INSERT INTO "visits" ("date")  
-             VALUES ($1)`, [datetime]); // sends queries
-        return true;
-    } catch (error) {
-        console.error(error.stack);
-        return false;
-    }
-};
-
 const getDateTime = {
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -40,16 +27,29 @@ const getDateTime = {
     return dateTime;
 }
 
+const logVisit = async () => {
+    var date = getDateTime();
+    try {         // gets connection
+        await client.query("INSERT INTO sitevisits(date)VALUES('"+date+"')",
+            (err, res) => {
+                console.log(err, res);
+            }
+        );
+        return true;
+    } catch (error) {
+        console.error(error.stack);
+        return false;
+    }
+};
+
 const logSystemGenerated = async (coordinates) => {
+    var date = getDateTime();
     try {         // gets connection
         await client.query("INSERT INTO systemsGenerated(coordinates)VALUES('"+coordinates+"')",
             (err, res) => {
                 console.log(err, res);
             }
         );
-        /*await client.query(
-            `INSERT INTO "systemsGenerated" ("coordinates")  
-             VALUES ($1)`, [seed]); // sends queries*/
         return true;
     } catch (error) {
         console.error(error.stack);
