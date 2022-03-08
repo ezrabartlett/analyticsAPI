@@ -1,9 +1,6 @@
 const app = require('express')();
-var cors = require('cors')
+
 const { Pool, Client } = require("pg");
-
-
-app.use(cors())
 
 /*const client = new Client({
   user: "pvigrpjtxqtcnn",
