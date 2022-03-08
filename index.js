@@ -52,9 +52,10 @@ app.get('/resumeDownload', (req, res) => {
     });
 });
 
-app.get('/testVisit', (req, res) => {
+app.get('/testVisit/:testNum', (req, res) => {
     console.log("inserting a visit");
-    logVisit(25).then(result => {
+    const {testNum} = req.params;
+    logVisit(testNum).then(result => {
         if (result) {
             res.status(200).send({
                 response: "inserted a visit"
