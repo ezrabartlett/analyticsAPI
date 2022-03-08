@@ -17,11 +17,10 @@ const client = new Client({
   }
 });
 
-//client.connect();
+client.connect();
 
 const logVisit = async (visitNum) => {
-    try {
-        await client.connect();           // gets connection
+    try {         // gets connection
         await client.query(
             `INSERT INTO "visits" ("visit")  
              VALUES ($1)`, [visitNum]); // sends queries
@@ -29,8 +28,6 @@ const logVisit = async (visitNum) => {
     } catch (error) {
         console.error(error.stack);
         return false;
-    } finally {
-        await client.end();               // closes connection
     }
 };
 
@@ -60,7 +57,7 @@ app.get('/testVisit', (req, res) => {
     logVisit(25).then(result => {
         if (result) {
             res.status(200).send({
-                response: "created table"
+                response: "inserted a visit"
             });
         }
     });
