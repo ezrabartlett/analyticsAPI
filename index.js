@@ -1,4 +1,18 @@
 const app = require('express')();
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkZGSEMz286KKW4CrxU3YBJf6WojlC_uY",
+  authDomain: "personalsiteanalytics.firebaseapp.com",
+  projectId: "personalsiteanalytics",
+  storageBucket: "personalsiteanalytics.appspot.com",
+  messagingSenderId: "167308055246",
+  appId: "1:167308055246:web:f39e36774e453789ca769f"
+};
+
+// Initialize Firebase
+const fireBase = initializeApp(firebaseConfig);
+
 const PORT = 8080;
 
 app.listen(
