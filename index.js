@@ -2,7 +2,7 @@ const app = require('express')();
 
 const { Pool, Client } = require("pg");
 
-const Client = new Client({
+const client = new Client({
   user: "pvigrpjtxqtcnn",
   host: "ec2-52-23-40-80.compute-1.amazonaws.com",
   database: "dbaiv4n81imle6",
