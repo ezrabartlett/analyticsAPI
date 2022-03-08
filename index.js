@@ -1,13 +1,23 @@
 const app = require('express')();
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDkZGSEMz286KKW4CrxU3YBJf6WojlC_uY",
-  authDomain: "personalsiteanalytics.firebaseapp.com",
-  projectId: "personalsiteanalytics",
-  storageBucket: "personalsiteanalytics.appspot.com",
-  messagingSenderId: "167308055246",
-  appId: "1:167308055246:web:f39e36774e453789ca769f"
-};
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+client.connect();
+
+client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  client.end();
+});
 
 const PORT = process.env.PORT || 8080;
 
