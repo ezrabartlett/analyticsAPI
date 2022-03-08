@@ -1,5 +1,4 @@
 const app = require('express')();
-import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDkZGSEMz286KKW4CrxU3YBJf6WojlC_uY",
@@ -10,10 +9,7 @@ const firebaseConfig = {
   appId: "1:167308055246:web:f39e36774e453789ca769f"
 };
 
-// Initialize Firebase
-const fireBase = initializeApp(firebaseConfig);
-
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.listen(
     PORT,
