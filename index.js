@@ -45,7 +45,7 @@ const logVisit = async () => {
 const logSystemGenerated = async (coordinates) => {
     var date = getDateTime();
     try {         // gets connection
-        await client.query("INSERT INTO systemsGenerated(coordinates)VALUES('"+coordinates+"')",
+        await client.query("INSERT INTO systemsGenerated(date, coordinates)VALUES('"+date+","+coordinates+"')",
             (err, res) => {
                 console.log(err, res);
             }
@@ -90,7 +90,7 @@ app.get('/logVisit', (req, res) => {
 });
 
 app.get('/systemGenerated/:coordinates', (req, res) => {
-    console.log("Site visited");
+    console.log("logging a system generation");
     const {coordinates} = req.params;
     logSystemGenerated(coordinates.toString()).then(result => {
         if (result) {
