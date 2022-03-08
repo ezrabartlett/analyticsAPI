@@ -76,10 +76,10 @@ app.get('/testVisit/:testNum', (req, res) => {
     });
 });
 
-app.get('/systemGenerated/:seed', (req, res) => {
+app.get('/systemGenerated/:coordinates', (req, res) => {
     console.log("Site visited");
-    const {seed} = req.params;
-    logSystemGenerated(seed).then(result => {
+    const {coordinates} = req.params;
+    logSystemGenerated(coordinates.toString()).then(result => {
         if (result) {
             res.status(200).send({
                 response: `System Generated with seed ${seed}`
