@@ -82,11 +82,8 @@ app.get('/systemGenerated/:seed', (req, res) => {
     logSystemGenerated(seed).then(result => {
         if (result) {
             res.status(200).send({
-                response: "logged a system generation"
+                response: `System Generated with seed ${seed}`
             });
         }
-    });
-    res.status(200).send({
-        response: `System Generated with seed ${seed}`
     });
 });
