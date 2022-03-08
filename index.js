@@ -19,17 +19,26 @@ const client = new Client({
 
 client.connect();
 
-const logVisit = async (visitNum) => {
+const logVisit = async () => {
     try {         // gets connection
+        var datetime = getDateTime()
         await client.query(
-            `INSERT INTO "visits" ("visit")  
-             VALUES ($1)`, [visitNum]); // sends queries
+            `INSERT INTO "visits" ("date")  
+             VALUES ($1)`, [datetime]); // sends queries
         return true;
     } catch (error) {
         console.error(error.stack);
         return false;
     }
 };
+
+const getDateTime = {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    return dateTime;
+}
 
 const logSystemGenerated = async (coordinates) => {
     try {         // gets connection
@@ -69,13 +78,12 @@ app.get('/resumeDownload', (req, res) => {
     });
 });
 
-app.get('/testVisit/:testNum', (req, res) => {
-    console.log("inserting a visit");
-    const {testNum} = req.params;
-    logVisit(testNum).then(result => {
+app.get('/logVisit', (req, res) => {
+    console.log("logging a visit");
+    logVisit().then(result => {
         if (result) {
             res.status(200).send({
-                response: "inserted a visit"
+                response: "logged a visit"
             });
         }
     });
