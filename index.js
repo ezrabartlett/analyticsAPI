@@ -88,7 +88,7 @@ app.get('/systemGenerated/:coordinates', (req, res) => {
     logSystemGenerated(coordinates.toString()).then(result => {
         if (result) {
             res.status(200).send({
-                response: `System Generated with seed ${seed}`
+                response: `System Generated with seed ${coordinates}`
             });
         }
     });
