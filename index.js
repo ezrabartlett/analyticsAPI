@@ -31,9 +31,9 @@ const logVisit = async (visitNum) => {
     }
 };
 
-const logSystemGenerated = async (seed) => {
+const logSystemGenerated = async (coordinates) => {
     try {         // gets connection
-        await client.query("INSERT INTO systemsGenerated(coordinates)VALUES('this is a testValue')",
+        await client.query("INSERT INTO systemsGenerated(coordinates)VALUES('"+coordinates+"')",
             (err, res) => {
                 console.log(err, res);
                 pool.end();
