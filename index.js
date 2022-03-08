@@ -36,7 +36,6 @@ const logSystemGenerated = async (coordinates) => {
         await client.query("INSERT INTO systemsGenerated(coordinates)VALUES('"+coordinates+"')",
             (err, res) => {
                 console.log(err, res);
-                pool.end();
             }
         );
         /*await client.query(
