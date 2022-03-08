@@ -2,20 +2,20 @@ const app = require('express')();
 
 const { Pool, Client } = require("pg");
 
-const client = new Client({
+/*const client = new Client({
   user: "pvigrpjtxqtcnn",
   host: "ec2-52-23-40-80.compute-1.amazonaws.com",
   database: "dbaiv4n81imle6",
   password: "f98df04845897fc6b7bdc9d7582e9e9a2001435ee593da0529aa764e26a650ef",
   port: "5432"
-});
+});*/
 
-//const client = new Client({
-/*  connectionString: process.env.DATABASE_URL,
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
-});*/
+});
 
 //client.connect();
 
