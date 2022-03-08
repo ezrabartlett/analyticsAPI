@@ -31,6 +31,18 @@ const logVisit = async (visitNum) => {
     }
 };
 
+const logSystemGenerated = async (seed) => {
+    try {         // gets connection
+        await client.query(
+            `INSERT INTO "systemGenerated" ("seed")  
+             VALUES ($1)`, [seed]); // sends queries
+        return true;
+    } catch (error) {
+        console.error(error.stack);
+        return false;
+    }
+};
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(
@@ -67,11 +79,13 @@ app.get('/testVisit/:testNum', (req, res) => {
 app.get('/systemGenerated/:seed', (req, res) => {
     console.log("Site visited");
     const {seed} = req.params;
-    if (!seed) {
-        res.status(418).send({
-            message:"No seed sent"
-        })
-    } 
+    logSystemGenerated(seed).then(result => {
+        if (result) {
+            res.status(200).send({
+                response: "logged a system generation"
+            });
+        }
+    });
     res.status(200).send({
         response: `System Generated with seed ${seed}`
     });
