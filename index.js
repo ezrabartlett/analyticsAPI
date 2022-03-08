@@ -42,7 +42,7 @@ app.get('/resumeDownload', (req, res) => {
 
 app.get('/testVisit', (req, res) => {
     console.log("creating table");
-    client.query("CREATE TABLE testTable (visits int);", (err, res) => {
+    client.query("INSERT INTO Visits(visit) Values(1);", (err, res) => {
       if (err) throw err;
       for (let row of res.rows) {
         console.log(JSON.stringify(row));
